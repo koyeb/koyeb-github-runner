@@ -2,7 +2,7 @@
 
 The **koyeb-github-runner** repository contains the source code for the Docker image [koyeb/github-runner](https://hub.docker.com/r/koyeb/github-runner/), which allows you to set up a GitHub runner on the Koyeb platform.
 
-## Getting Started
+## Usage
 
 To manually start a GitHub runner on Koyeb, follow these steps:
 
@@ -32,7 +32,7 @@ $> koyeb service create \
    runner
 ```
 
-## Usage
+## 🎉 That's all! 🎉
 
 Once you've configured the environment variables and set up the runner, it will be ready to process jobs in your GitHub project.
 
