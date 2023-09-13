@@ -19,3 +19,7 @@ To manually start a GitHub runner on Koyeb, follow these steps:
 Once you've configured the environment variables and set up the runner, it will be ready to process jobs in your GitHub project.
 
 For more information on how to use GitHub runners, refer to the [GitHub Actions documentation](https://docs.github.com/en/actions).
+
+## Advanced usage
+
+To start GitHub runners on-demand, consider using [koyeb-github-runner-executor](https://github.com/koyeb/koyeb-github-runner-executor).
