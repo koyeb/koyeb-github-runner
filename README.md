@@ -11,7 +11,7 @@ To manually start a GitHub runner on Koyeb, follow these steps:
 3. Select the "Worker" service type
 4. Set the following environment variables:
    - **REPO_URL:** The URL of your GitHub repository.
-   - **GITHUB_TOKEN:** Your GitHub token, which can be found in your project's Settings > Actions > Runners > New self-hosted runner section.
+   - **GITHUB_TOKEN:** Your GitHub token, which can be found in your project's Settings > Actions > Runners > New self-hosted runner section. Prefer using a secret over a plain text environment variable.
    - **RUNNER_LABELS:** A comma-separated list of labels that trigger the runner. Be sure to set the same label in the `runs-on` setting of your job file.
 
 ## Usage
