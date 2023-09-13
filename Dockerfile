@@ -2,6 +2,7 @@ FROM ubuntu
 
 RUN apt-get update && apt-get install -y \
     libicu70 \
+    ca-certificates \
     sysbench
 
 RUN groupadd -r runner && useradd -r -g runner runner

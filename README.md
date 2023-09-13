@@ -8,7 +8,8 @@ To manually start a GitHub runner on Koyeb, follow these steps:
 
 1. Create a new Docker project.
 2. Use the image `koyeb/github-runner`
-3. Set the following environment variables:
+3. Select the "Worker" service type
+4. Set the following environment variables:
    - **REPO_URL:** The URL of your GitHub repository.
    - **GITHUB_TOKEN:** Your GitHub token, which can be found in your project's Settings > Actions > Runners > New self-hosted runner section.
    - **RUNNER_LABELS:** A comma-separated list of labels that trigger the runner. Be sure to set the same label in the `runs-on` setting of your job file.
