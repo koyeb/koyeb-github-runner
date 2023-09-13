@@ -4,7 +4,7 @@ The **koyeb-github-runner** repository contains the source code for the Docker i
 
 ## Getting Started
 
-To manually start a GitHub runner on Koyeb, follow these steps.
+To manually start a GitHub runner on Koyeb, follow these steps:
 
 ### Using the [control panel](https://app.koyeb.com/)
 
@@ -20,7 +20,16 @@ To manually start a GitHub runner on Koyeb, follow these steps.
 
 ```bash
 $> koyeb app create github-runner
-$> koyeb service create --type worker --docker koyeb/github-runner --env REPO_URL=https://github.com/owner/repo --env GITHUB_TOKEN=xxx --env RUNNER_LABELS=koyeb-runner --region par --instance-type nano --app github-runner runner
+$> koyeb service create \
+   --type worker \
+   --docker koyeb/github-runner \
+   --env REPO_URL=https://github.com/owner/repo \
+   --env GITHUB_TOKEN=xxx \
+   --env RUNNER_LABELS=koyeb-runner \
+   --region par \
+   --instance-type nano \
+   --app github-runner \
+   runner
 ```
 
 ## Usage
