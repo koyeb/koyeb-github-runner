@@ -40,4 +40,4 @@ For more information on how to use GitHub runners, refer to the [GitHub Actions 
 
 ## Advanced usage
 
-To start GitHub runners on-demand, consider using [koyeb-github-runner-executor](https://github.com/koyeb/koyeb-github-runner-executor).
+To start GitHub runners on-demand, consider using [koyeb-github-runner-scheduler](https://github.com/koyeb/koyeb-github-runner-scheduler).
