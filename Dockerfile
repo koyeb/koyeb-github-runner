@@ -4,8 +4,15 @@ RUN apt-get update && apt-get install -y \
     libicu70 \
     ca-certificates \
     curl \
-    jq \
-    sysbench
+    jq
+
+# Install various dependencies that might be useful in a runner
+RUN apt-get update && apt-get install -y \
+    sysbench \
+    python3 \
+    python3-pip
+
+RUN pip install poetry
 
 RUN groupadd -r runner && useradd -r -g runner runner
 RUN mkdir -p /home/runner
