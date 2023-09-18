@@ -10,7 +10,8 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get update && apt-get install -y \
     sysbench \
     python3 \
-    python3-pip
+    python3-pip \
+    libpq-dev
 
 RUN pip install poetry
 
