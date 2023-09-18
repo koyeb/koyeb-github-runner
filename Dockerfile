@@ -3,6 +3,8 @@ FROM ubuntu
 RUN apt-get update && apt-get install -y \
     libicu70 \
     ca-certificates \
+    curl \
+    jq \
     sysbench
 
 RUN groupadd -r runner && useradd -r -g runner runner
