@@ -14,14 +14,6 @@ for required_env in \
     fi
 done
 
-# If the environment variable EPHEMERAL is not empty, configure the runner to
-# only take one job and then let the service un-configure the runner after the
-# job finishes
-if [ ! -z "$EPHEMERAL" ];
-then
-    ephemeral="--ephemeral"
-fi
-
 ./config.sh \
     --url "$REPO_URL" \
     --token "$GITHUB_TOKEN" \
@@ -30,7 +22,6 @@ fi
     --no-default-labels \
     --labels "$RUNNER_LABELS" \
     --work workspace \
-    --replace \
-    $ephemeral
+    --replace
 
 exec ./run.sh
