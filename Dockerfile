@@ -1,17 +1,17 @@
 FROM ubuntu
 
+# Install various dependencies that might be useful in a runner
 RUN apt-get update && apt-get install -y \
     libicu70 \
     ca-certificates \
     curl \
-    jq
-
-# Install various dependencies that might be useful in a runner
-RUN apt-get update && apt-get install -y \
+    jq \
     sysbench \
     python3 \
     python3-pip \
-    libpq-dev
+    libpq-dev \
+    golang \
+    git
 
 RUN pip install poetry
 
