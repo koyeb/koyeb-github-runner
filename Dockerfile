@@ -1,5 +1,8 @@
 FROM ubuntu
 
+ARG RUNNER_VERSION
+RUN test -n "$RUNNER_VERSION"
+
 # Install various dependencies that might be useful in a runner
 RUN apt-get update && apt-get install -y \
     libicu70 \
@@ -22,9 +25,9 @@ RUN mkdir -p /home/runner
 WORKDIR /home/runner
 RUN chown -R runner:runner /home/runner
 
-ADD https://github.com/actions/runner/releases/download/v2.309.0/actions-runner-linux-x64-2.309.0.tar.gz /home/runner/
-RUN tar xzf /home/runner/actions-runner-linux-x64-2.309.0.tar.gz
-RUN rm -f /home/runner/actions-runner-linux-x64-2.309.0.tar.gz
+ADD https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz /home/runner/
+RUN tar xzf /home/runner/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz
+RUN rm -f /home/runner/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz
 
 USER runner
 
