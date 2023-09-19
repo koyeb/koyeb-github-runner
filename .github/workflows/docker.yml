@@ -28,7 +28,8 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Get the latest runner version
         run: |
-          echo RUNNER_VERSION=$(curl -s https://github.com/actions/runner/releases/latest/ -i | sed -En 's#^location: https://github.com/actions/runner/releases/tag/v(.*)#\1#p' | sed 's/\r$//')
+          RUNNER_VERSION=$(curl -s https://github.com/actions/runner/releases/latest/ -i | sed -En 's#^location: https://github.com/actions/runner/releases/tag/v(.*)#\1#p' | sed 's/\r$//')
+          echo "RUNNER_VERSION=$RUNNER_VERSION" | tee $GITHUB_ENV
 
       - name: Build and push
         uses: docker/build-push-action@v4
