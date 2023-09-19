@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - master
+  # Trigger rebuild in case of new runner version
+  schedule:
+    - cron: "13 9 * * *"
 
 env:
   RUNNER_VERSION: ""
