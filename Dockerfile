@@ -15,7 +15,8 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     libpq-dev \
     golang \
-    git
+    git \
+    docker.io
 
 RUN pip install poetry
 
