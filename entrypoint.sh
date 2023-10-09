@@ -2,6 +2,19 @@
 
 set -e
 
+# Run docker daemon
+/usr/local/bin/dockerd-entrypoint.sh --tls=false >/dev/null 2>&1 &
+
+echo "Waiting for docker daemon to start..."
+while true;
+do
+    test -S /var/run/docker.sock && echo "ok!" && break
+    echo -n .
+    sleep .5
+done
+
+chown runner:runner /var/run/docker.sock
+
 for required_env in \
     REPO_URL \
     GITHUB_TOKEN \
@@ -40,14 +53,14 @@ then
     exit 1
 fi
 
-./config.sh \
-    --url "$REPO_URL" \
-    --token "$RUNNER_TOKEN" \
-    --name "koyeb-runner-$(hostname)" \
+su -c "./config.sh \
+    --url '$REPO_URL' \
+    --token '$RUNNER_TOKEN' \
+    --name 'koyeb-runner-$(hostname)' \
     --runnergroup default \
     --no-default-labels \
-    --labels "$RUNNER_LABELS" \
+    --labels '$RUNNER_LABELS' \
     --work workspace \
-    --replace
+    --replace" runner
 
-exec ./run.sh
+exec su -c "/usr/local/bin/dockerd-entrypoint.sh ./run.sh" runner
