@@ -11,7 +11,8 @@ To manually start a GitHub runner on Koyeb, follow these steps:
 1. Create a new Docker project.
 2. Use the image `koyeb/github-runner`
 3. Select the "Worker" service type
-4. Set the following environment variables:
+4. Set the "privileged" flag
+5. Set the following environment variables:
 
 | Variable name | Value |
 |---------------|-------|
@@ -30,7 +31,8 @@ $> koyeb service create \
    --env GITHUB_TOKEN=xxx \
    --env RUNNER_LABELS=koyeb-runner \
    --region par \
-   --instance-type nano \
+   --instance-type medium \
+   --privileged \
    --app github-runner \
    runner
 ```
