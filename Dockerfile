@@ -15,7 +15,11 @@ RUN apt-get install -y \
     xfsprogs \
     xz-utils \
     pigz \
-    fuse-overlayfs
+    fuse-overlayfs \
+    kmod
+
+RUN update-alternatives --set iptables /usr/sbin/iptables-legacy
+RUN update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
 
 COPY --from=docker:dind /etc/subuid /etc/subuid
 COPY --from=docker:dind /etc/subgid /etc/subgid
@@ -56,8 +60,6 @@ RUN test -n "$RUNNER_VERSION"
 ADD https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz /home/runner/
 RUN tar xzf /home/runner/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz
 RUN rm -f /home/runner/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz
-
-#ENV RUNNER_ALLOW_RUNASROOT=1
 
 COPY ./entrypoint.sh /entrypoint.sh
 
