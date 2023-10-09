@@ -28,17 +28,109 @@ COPY --from=docker:dind /usr/local/bin/ /usr/local/bin/
 COPY --from=docker:dind /usr/local/libexec/docker/cli-plugins/ /usr/local/libexec/docker/cli-plugins/
 
 # Then, we install various dependencies that might be useful in a runner.
-# This is minimalist and we might want to extend this list. See
-# https://github.com/actions/runner-images/tree/main to check what is installed
-# on GitHub runners by default.
+# This list is inspired by the official GitHub runners, see
+# https://github.com/actions/runner-images/tree/main
+RUN apt-get install -y acl \
+    aria2 \
+    autoconf \
+    automake \
+    binutils \
+    bison \
+    brotli \
+    bzip2 \
+    coreutils \
+    curl \
+    dbus \
+    dnsutils \
+    dpkg \
+    dpkg-dev \
+    fakeroot \
+    file \
+    flex \
+    fonts-noto-color-emoji \
+    ftp \
+    g++ \
+    gcc \
+    gnupg2 \
+    haveged \
+    imagemagick \
+    iproute2 \
+    iputils-ping \
+    jq
+
+RUN apt-get install -y \
+    lib32z1 \
+    libc++-dev \
+    libc++abi-dev \
+    libc6-dev \
+    libcurl4 \
+    libgbm-dev \
+    libgconf-2-4 \
+    libgsl-dev \
+    libgtk-3-0 \
+    libmagic-dev \
+    libmagickcore-dev \
+    libmagickwand-dev \
+    libsecret-1-dev \
+    libsqlite3-dev \
+    libssl-dev \
+    libtool \
+    libunwind8 \
+    libxkbfile-dev \
+    libxss1 \
+    libyaml-dev \
+    locales \
+    lz4
+
+RUN apt-get install -y \
+    m4 \
+    make \
+    mediainfo \
+    mercurial \
+    net-tools \
+    netcat \
+    openssh-client \
+    p7zip-full \
+    p7zip-rar \
+    parallel \
+    pass \
+    patchelf \
+    pigz \
+    pkg-config \
+    pollinate \
+    python-is-python3 \
+    rpm \
+    rsync \
+    shellcheck \
+    sphinxsearch \
+    sqlite3
+
+RUN apt-get install -y \
+    ssh \
+    sshpass \
+    subversion \
+    sudo \
+    swig \
+    tar \
+    telnet \
+    texinfo \
+    time \
+    tk \
+    tzdata \
+    unzip \
+    upx \
+    wget \
+    xorriso \
+    xvfb \
+    xz-utils \
+    zip \
+    zsync
+
+# Other packages that are not in the official GitHub runners but that might be interesting.
 RUN apt-get update && apt-get install -y \
     libicu70 \
     ca-certificates \
-    curl \
-    jq \
     sysbench \
-    python3 \
-    python-is-python3 \
     python3-pip \
     libpq-dev \
     golang \
