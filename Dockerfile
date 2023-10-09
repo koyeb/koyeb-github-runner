@@ -135,7 +135,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
     libpq-dev \
     golang \
     git \
-    docker.io
+    docker.io \
+    libnss3
 
 
 # Finally, let's install the runner.
