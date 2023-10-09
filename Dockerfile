@@ -30,7 +30,7 @@ COPY --from=docker:dind /usr/local/libexec/docker/cli-plugins/ /usr/local/libexe
 # Then, we install various dependencies that might be useful in a runner.
 # This list is inspired by the official GitHub runners, see
 # https://github.com/actions/runner-images/tree/main
-RUN apt-get install -y acl \
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y acl \
     aria2 \
     autoconf \
     automake \
@@ -58,7 +58,7 @@ RUN apt-get install -y acl \
     iputils-ping \
     jq
 
-RUN apt-get install -y \
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
     lib32z1 \
     libc++-dev \
     libc++abi-dev \
@@ -82,7 +82,7 @@ RUN apt-get install -y \
     locales \
     lz4
 
-RUN apt-get install -y \
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
     m4 \
     make \
     mediainfo \
@@ -105,7 +105,7 @@ RUN apt-get install -y \
     sphinxsearch \
     sqlite3
 
-RUN apt-get install -y \
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
     ssh \
     sshpass \
     subversion \
@@ -127,7 +127,7 @@ RUN apt-get install -y \
     zsync
 
 # Other packages that are not in the official GitHub runners but that might be interesting.
-RUN apt-get update && apt-get install -y \
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
     libicu70 \
     ca-certificates \
     sysbench \
