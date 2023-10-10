@@ -173,6 +173,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
     xdg-utils
 
 
+RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -P /tmp/
+RUN apt-get install -y -f /tmp/google-chrome-stable_current_amd64.deb
+RUN rm /tmp/google-chrome-stable_current_amd64.deb
+
 # Finally, let's install the runner.
 RUN groupadd -r runner && useradd -r -g runner runner
 RUN mkdir -p /home/runner
