@@ -14,30 +14,34 @@ for required_env in \
    fi
 done
 
-# Run docker daemon
-/usr/local/bin/dockerd-entrypoint.sh --tls=false > /tmp/docker.log 2>&1 &
+if [[ -z ${SKIP_DOCKER+x} ]]; then
+    # Run docker daemon
+    /usr/local/bin/dockerd-entrypoint.sh --tls=false > /tmp/docker.log 2>&1 &
 
-echo "Waiting for docker daemon to start..."
-i=0
-while true;
-do
-   test -S /var/run/docker.sock && echo "ok!" && break
-   echo ...
-   sleep .5
-   i=$((i+1))
+    echo "Waiting for docker daemon to start..." >&2
+    i=0
+    while true;
+    do
+        test -S /var/run/docker.sock && echo "ok!" >&2 && break
+        echo ... >&2
+        sleep .5
+        i=$((i+1))
 
-   if [ $i -gt 60 ];
-   then
-    echo === Unable to start docker daemon === >&2
-    cat /tmp/docker.log >&2
-    echo "====================================" >&2
-    echo "Unable to start docker daemon. Make sure your service has the privileged flag set." >&2
-    exit 1
-   fi
-done
+        if [ $i -gt 60 ];
+        then
+        echo === Unable to start docker daemon === >&2
+        cat /tmp/docker.log >&2
+        echo "====================================" >&2
+        echo "Unable to start docker daemon. Make sure your service has the privileged flag set." >&2
+        exit 1
+        fi
+    done
 
-# Allow runner to start Docker containers
-chown runner:runner /var/run/docker.sock
+    # Allow runner to start Docker containers
+    chown runner:runner /var/run/docker.sock
+else
+    echo "SKIP_DOCKER is set, skip docker daemon start" >&2
+fi
 
 
 ORG_REPO=$(echo "$REPO_URL" | sed -n -E "s#(https://)?(www\.)?(github\.com/)?([^/]+)/?([^/#?]+)?.*#\4/\5#p")
@@ -53,7 +57,7 @@ fi
 if [ -z "$REPO" ];
 then
     echo ">> Get registration token for organization $ORGANIZATION"
-    # https://docs.github.com/en/rest/actions/self-hosted-runners?apiVersion=2022-11-28
+    # https://docs.github.com/en/rest/actions/self-hosted-runners?apiVersion=2022-11-28#create-a-registration-token-for-an-organization
     resp=$(curl -s -L \
     -X POST \
     -H "Accept: application/vnd.github+json" \
@@ -62,7 +66,7 @@ then
     "https://api.github.com/orgs/$ORGANIZATION/actions/runners/registration-token")
 else
     echo ">> Get registration token for repository $ORGANIZATION/$REPO"
-    # https://docs.github.com/en/rest/actions/self-hosted-runners?apiVersion=2022-11-28
+    # https://docs.github.com/en/rest/actions/self-hosted-runners?apiVersion=2022-11-28#create-a-registration-token-for-a-repository
     resp=$(curl -s -L \
     -X POST \
     -H "Accept: application/vnd.github+json" \
