@@ -2,48 +2,63 @@
 
 set -e
 
+for required_env in \
+   REPO_URL \
+   GITHUB_TOKEN \
+   RUNNER_LABELS \
+; do
+   if [ -z "${!required_env}" ];
+   then
+       echo "Variable $required_env is missing, exit" >&2
+       exit 1
+   fi
+done
+
 # Run docker daemon
 /usr/local/bin/dockerd-entrypoint.sh --tls=false >/dev/null 2>&1 &
 
 echo "Waiting for docker daemon to start..."
 while true;
 do
-    test -S /var/run/docker.sock && echo "ok!" && break
-    echo -n .
-    sleep .5
+   test -S /var/run/docker.sock && echo "ok!" && break
+   echo -n .
+   sleep .5
 done
 
+# Allow runner to start Docker containers
 chown runner:runner /var/run/docker.sock
 
-for required_env in \
-    REPO_URL \
-    GITHUB_TOKEN \
-    RUNNER_LABELS \
-; do
-    if [ -z "${!required_env}" ];
-    then
-        echo "Variable $required_env is missing, exit" >&2
-        exit 1
-    fi
-done
 
+ORG_REPO=$(echo "$REPO_URL" | sed -n -E "s#(https://)?(www\.)?(github\.com/)?([^/]+)/?([^/#?]+)?.*#\4/\5#p")
+ORGANIZATION=$(echo "$ORG_REPO" | awk -F/ '{print $1}')
+REPO=$(echo "$ORG_REPO" | awk -F/ '{print $2}')
 
-REPO=$(echo "$REPO_URL" | sed -n -E 's/^(https:\/\/github\.com\/|github\.com\/)?([^/]+)\/([^/]+)$/\2\/\3/p')
-
-if [ -z "$REPO" ];
+if [ -z "$ORGANIZATION" ];
 then
-    echo "Unable to parse REPO_URL, should be like https://github.com/<org>/<repo>, exit" >&2
+    echo "Unable to parse REPO_URL, should be like <org>/<repo> or <org>, exit" >&2
     exit 1
 fi
 
-echo ">> Get registration token for $REPO"
-# https://docs.github.com/en/rest/actions/self-hosted-runners?apiVersion=2022-11-28
-resp=$(curl -s -L \
-  -X POST \
-  -H "Accept: application/vnd.github+json" \
-  -H "Authorization: Bearer $GITHUB_TOKEN" \
-  -H "X-GitHub-Api-Version: 2022-11-28" \
-  "https://api.github.com/repos/$REPO/actions/runners/registration-token")
+if [ -z "$REPO" ];
+then
+    echo ">> Get registration token for organization $ORGANIZATION"
+    # https://docs.github.com/en/rest/actions/self-hosted-runners?apiVersion=2022-11-28
+    resp=$(curl -s -L \
+    -X POST \
+    -H "Accept: application/vnd.github+json" \
+    -H "Authorization: Bearer $GITHUB_TOKEN" \
+    -H "X-GitHub-Api-Version: 2022-11-28" \
+    "https://api.github.com/orgs/$ORGANIZATION/actions/runners/registration-token")
+else
+    echo ">> Get registration token for repository $ORGANIZATION/$REPO"
+    # https://docs.github.com/en/rest/actions/self-hosted-runners?apiVersion=2022-11-28
+    resp=$(curl -s -L \
+    -X POST \
+    -H "Accept: application/vnd.github+json" \
+    -H "Authorization: Bearer $GITHUB_TOKEN" \
+    -H "X-GitHub-Api-Version: 2022-11-28" \
+    "https://api.github.com/repos/$REPO/actions/runners/registration-token")
+fi
 
 RUNNER_TOKEN=$(echo $resp | jq -r .token)
 
