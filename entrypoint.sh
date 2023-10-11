@@ -21,7 +21,7 @@ echo "Waiting for docker daemon to start..."
 i=0
 while true;
 do
-   test -S xx/var/run/docker.sock && echo "ok!" && break
+   test -S /var/run/docker.sock && echo "ok!" && break
    echo ...
    sleep .5
    i=$((i+1))
