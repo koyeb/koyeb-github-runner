@@ -15,7 +15,7 @@ for required_env in \
 done
 
 # Run docker daemon
-/usr/local/bin/dockerd-entrypoint.sh --tls=false > >(tee /dev/stdout) 2> >(tee /dev/stderr >&2) &
+/usr/local/bin/dockerd-entrypoint.sh --tls=false > /tmp/docker.log 2>&1 &
 
 echo "Waiting for docker daemon to start..."
 i=0
@@ -28,13 +28,13 @@ do
 
    if [ $i -gt 60 ];
    then
-    echo "Unable to start docker. Did you set privileged flag on the service?" >&2
+    echo === Unable to start docker daemon === >&2
+    cat /tmp/docker.log >&2
+    echo "====================================" >&2
+    echo "Unable to start docker daemon. Make sure your service has the privileged flag set." >&2
     exit 1
    fi
 done
-
-# Disown dockerd-entrypoint.sh to ignore the output
-disown
 
 # Allow runner to start Docker containers
 chown runner:runner /var/run/docker.sock
