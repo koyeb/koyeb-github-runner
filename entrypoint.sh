@@ -15,7 +15,7 @@ for required_env in \
 done
 
 # Run docker daemon
-/usr/local/bin/dockerd-entrypoint.sh --tls=false >/dev/null 2>&1 &
+/usr/local/bin/dockerd-entrypoint.sh --tls=false > >(tee /dev/stdout) 2> >(tee /dev/stderr >&2) &
 
 echo "Waiting for docker daemon to start..."
 i=0
@@ -32,6 +32,9 @@ do
     exit 1
    fi
 done
+
+# Disown dockerd-entrypoint.sh to ignore the output
+disown
 
 # Allow runner to start Docker containers
 chown runner:runner /var/run/docker.sock
