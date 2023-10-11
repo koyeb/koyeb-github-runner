@@ -18,11 +18,19 @@ done
 /usr/local/bin/dockerd-entrypoint.sh --tls=false >/dev/null 2>&1 &
 
 echo "Waiting for docker daemon to start..."
+i=0
 while true;
 do
-   test -S /var/run/docker.sock && echo "ok!" && break
+   test -S xx/var/run/docker.sock && echo "ok!" && break
    echo -n .
    sleep .5
+   i=$((i+1))
+
+   if [ $i -gt 60 ];
+   then
+    echo "Unable to start docker. Did you set privileged flag on the service?" >&2
+    exit 1
+   fi
 done
 
 # Allow runner to start Docker containers
