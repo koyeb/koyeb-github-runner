@@ -22,7 +22,7 @@ i=0
 while true;
 do
    test -S xx/var/run/docker.sock && echo "ok!" && break
-   echo -n .
+   echo ...
    sleep .5
    i=$((i+1))
 
