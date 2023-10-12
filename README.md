@@ -20,8 +20,6 @@ To manually start a GitHub runner on Koyeb, follow these steps:
 | **GITHUB_TOKEN** | Your GitHub token that will be used to create a registration token for the runner. To generate it, go to [Developer Settings](https://github.com/settings/tokens?type=beta) > [Generate new token](https://github.com/settings/personal-access-tokens/new) and under "Permissions" select "Read & Write" for "Administration". *Prefer using a secret over a plain text value to store your token.*
 | **RUNNER_LABELS** | A comma-separated list of labels that trigger the runner. Be sure to set the same label in the `runs-on` setting of your job file.
 
-If instead you want to configure the runner for your entire organization, set the permission Organization permissions > Self-hosted runners > Read & Write, and set the `REPO_URL` variable to `https://github.com/<org>`.
-
 ### Using the [Koyeb CLI](https://github.com/koyeb/koyeb-cli)
 
 ```bash
@@ -46,5 +44,19 @@ Once you've configured the environment variables and set up the runner, it will 
 For more information on how to use GitHub runners, refer to the [GitHub Actions documentation](https://docs.github.com/en/actions).
 
 ## Advanced usage
+
+### Runner for the entire organization
+
+If you want to configure the runner for your entire organization:
+
+* when creating the token, set the permission Organization permissions > Self-hosted runners > Read & Write
+* set the `REPO_URL` variable to `https://github.com/<org>`
+
+### Disable docker daemon
+
+By default, the runner starts a docker daemon. If you don't need it, you can disable it by setting the `SKIP_DOCKER` environment variable to `true`.
+If you use small instances, this will save you some memory.
+
+### Start runners on-demand
 
 To start GitHub runners on-demand, consider using [koyeb-github-runner-scheduler](https://github.com/koyeb/koyeb-github-runner-scheduler).
