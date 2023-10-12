@@ -20,6 +20,8 @@ To manually start a GitHub runner on Koyeb, follow these steps:
 | **GITHUB_TOKEN** | Your GitHub token that will be used to create a registration token for the runner. To generate it, go to [Developer Settings](https://github.com/settings/tokens?type=beta) > [Generate new token](https://github.com/settings/personal-access-tokens/new) and under "Permissions" select "Read & Write" for "Administration". *Prefer using a secret over a plain text value to store your token.*
 | **RUNNER_LABELS** | A comma-separated list of labels that trigger the runner. Be sure to set the same label in the `runs-on` setting of your job file.
 
+**Note the default free and nano instances have 256MB of memory, which is not enough to run the runner. We recommend using at least a small instance.**
+
 ### Using the [Koyeb CLI](https://github.com/koyeb/koyeb-cli)
 
 ```bash
