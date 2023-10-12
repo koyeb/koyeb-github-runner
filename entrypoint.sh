@@ -14,7 +14,7 @@ for required_env in \
    fi
 done
 
-if [[ -z ${SKIP_DOCKER+x} ]]; then
+if [[ -z ${DISABLE_DOCKER_DAEMON+x} ]]; then
     # Run docker daemon
     /usr/local/bin/dockerd-entrypoint.sh --tls=false > /tmp/docker.log 2>&1 &
 
@@ -40,7 +40,7 @@ if [[ -z ${SKIP_DOCKER+x} ]]; then
     # Allow runner to start Docker containers
     chown runner:runner /var/run/docker.sock
 else
-    echo "SKIP_DOCKER is set, skip docker daemon start" >&2
+    echo "DISABLE_DOCKER_DAEMON is set, skip docker daemon start" >&2
 fi
 
 

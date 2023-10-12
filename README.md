@@ -54,7 +54,7 @@ If you want to configure the runner for your entire organization:
 
 ### Disable docker daemon
 
-By default, the runner starts a docker daemon. If you don't need it, you can disable it by setting the `SKIP_DOCKER` environment variable to `true`.
+By default, the runner starts a docker daemon. If you don't need it, you can disable it by setting the `DISABLE_DOCKER_DAEMON` environment variable to `true`.
 If you use small instances, this will save you some memory.
 
 ### Start runners on-demand
