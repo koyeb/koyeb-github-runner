@@ -6,7 +6,7 @@ The **koyeb-github-runner** repository contains the source code for the [`koyeb/
 
 By default, GitHub actions are run by shared runners hosted on GitHub. These runners are free, but due do their shared nature, they can be slow and have limited resources. To overcome these limitations, we've created a GitHub runner that can be deployed on Koyeb.
 
-To understand how **koyeb-github-runner** works, we will first explain a few concepts. If you are already familiar with GitHub runners, you can skip this section and go directly to the [Usage](#usage) section.
+To fully understand how this this runner works, there are some key concepts you should be aware of. If you are already familiar with GitHub runners, you can skip this section and go directly to the [Usage](#usage) section below.
 
 ### Repository or Organization Runner?
 
