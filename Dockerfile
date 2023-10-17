@@ -170,7 +170,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
     libxrandr2 \
     libxrender1 \
     lsb-release \
-    xdg-utils
+    xdg-utils \
+    libgmp-dev
 
 
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -P /tmp/
