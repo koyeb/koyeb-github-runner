@@ -49,7 +49,7 @@ To use this runner, you need:
 
 ## Usage
 
-To configure the Koyeb GitHub action, you need to complete the following steps:
+To configure the Koyeb GitHub runner, you need to complete the following steps:
 
 1. [Create a GitHub token](#1-create-a-github-token)
 2. [Create the Koyeb Application and Service](#2-create-the-koyeb-application-and-service)
