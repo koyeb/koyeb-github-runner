@@ -65,7 +65,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
     libc6-dev \
     libcurl4 \
     libgbm-dev \
-    libgconf-2-4 \
     libgsl-dev \
     libgtk-3-0 \
     libmagic-dev \
@@ -88,7 +87,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
     mediainfo \
     mercurial \
     net-tools \
-    netcat \
     openssh-client \
     p7zip-full \
     p7zip-rar \
@@ -128,7 +126,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
 
 # Other packages that are not in the official GitHub runners but that might be interesting.
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
-    libicu70 \
     ca-certificates \
     sysbench \
     python3-pip \
@@ -139,7 +136,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
     libnss3 \
     libgtk2.0-0 \
     libnotify-dev \
-    libasound2 \
     libxtst6 \
     xauth \
     fonts-liberation \
