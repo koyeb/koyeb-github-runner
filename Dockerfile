@@ -128,6 +128,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
     ca-certificates \
     sysbench \
+    fio \
     python3-pip \
     libpq-dev \
     golang \
